@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "327471454627",
+    "firebase_url": "https://short-story-46c89.firebaseio.com",
+    "project_id": "short-story-46c89",
+    "storage_bucket": "short-story-46c89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327471454627:android:7e45875ca2b600b1",
+        "android_client_info": {
+          "package_name": "com.taha.deneme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327471454627-ltg2p6bqi69c3ad0vdrpt7f18l6fdcd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2OY1aNyBD_RiwaU5COiW9bQOc8hp1BcY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
