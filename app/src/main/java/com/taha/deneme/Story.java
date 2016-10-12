@@ -15,6 +15,8 @@ public class Story {
     private float rating;
     private boolean editorPick;
     private int time;
+    boolean loaded=false;
+    String urlFull;
 
     public Story(String title, String author, String url, List<String> genres, String cover, float rating, boolean editorPick,int time) {
         this.title = title;

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder>{
     private ArrayList<Story> storylist;
-    //private Context context;
+    private Context context;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, author, time;
         public RatingBar rating;
@@ -49,7 +49,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //context = parent.getContext();
+        context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.listview, parent, false);
 
@@ -63,7 +63,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         holder.title.setText(story.getTitle());
         holder.author.setText(story.getAuthor());
         holder.rating.setRating(story.getRating());
-        holder.time.setText(String.valueOf(story.getTime()));
+        holder.time.setText(String.valueOf(story.getTime())+" minutes");
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storycover = storage.getReferenceFromUrl(story.getCover());
@@ -76,20 +76,24 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 //                    Picasso.with(context).load(uri.toString()).into(holder1.cover);
 //                    story.loaded = true;
 //                }
-//            }x
+//            }
 //        });
 
+        if(story.loaded){
+            Picasso.with(context).load(story.urlFull).into(holder.cover);
+        }
 
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storycover.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                //TODO
-                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                holder1.cover.setImageBitmap(bmp);
 
-            }
-        });
+//        final long ONE_MEGABYTE = 1024 * 1024;
+//        storycover.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//                //TODO
+//                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+//                holder1.cover.setImageBitmap(bmp);
+//
+//            }
+//        });
 
         if(story.getEditorPick())
             holder.editorPick.setVisibility(View.VISIBLE);

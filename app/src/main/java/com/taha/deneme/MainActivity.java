@@ -1,9 +1,7 @@
 package com.taha.deneme;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,20 +32,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Log.d("story","baslangic");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //--
         cycview = (RecyclerView) findViewById(R.id.recyclerview);
-        //-- get database and storage
+        //-- get database
         story_database = FirebaseDatabase.getInstance().getReference("stories");
+        //-- firebase storage
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
         //-- order stories by rating
-
-        Log.d("story","orderoncesi");
         Query story_ordered=story_database.orderByChild("rating").limitToLast(40);
 
-        Log.d("story","ordersonrasi");
         story_ordered.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,8 +62,23 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Collections.shuffle(storylist);
                 final ArrayList<Story> finalList = new ArrayList<Story>(storylist.subList(0,20));
-                Log.d("story","afterstories "+finalList.size());
+
                 sAdapter = new StoryAdapter(finalList);
+                for(final Story s:finalList){
+                    StorageReference storycover = storage.getReferenceFromUrl(s.getCover());
+
+                    storycover.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(!s.loaded){
+                                s.urlFull = uri.toString();
+                                s.loaded = true;
+                                sAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
+
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 cycview.setLayoutManager(mLayoutManager);
                 cycview.setItemAnimator(new DefaultItemAnimator());
