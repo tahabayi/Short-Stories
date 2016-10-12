@@ -23,6 +23,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.taha.deneme.TimeCircleActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.TimeCircleActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.taha.deneme.TimeListActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.TimeListActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

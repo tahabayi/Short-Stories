@@ -1,13 +1,15 @@
 package com.taha.deneme;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView cycview;
     StoryAdapter sAdapter;
     DatabaseReference story_database;
+    FloatingActionButton actionButton;
 
 
     @Override
@@ -36,12 +39,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //--
         cycview = (RecyclerView) findViewById(R.id.recyclerview);
+        actionButton = (FloatingActionButton) findViewById((R.id.floatingActionButton));
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TimeCircleActivity.class);
+                startActivity(intent);
+            }
+        });
         //-- get database
         story_database = FirebaseDatabase.getInstance().getReference("stories");
-        //-- firebase storage
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
         //-- order stories by rating
         Query story_ordered=story_database.orderByChild("rating").limitToLast(40);
+
+        querytoview(story_ordered,cycview,getApplicationContext(),this);
+
+
+    }
+
+    public static void querytoview(final Query story_ordered, final RecyclerView cycview, final Context context, final Activity main){
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
 
         story_ordered.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Collections.shuffle(storylist);
                 final ArrayList<Story> finalList = new ArrayList<Story>(storylist.subList(0,20));
 
-                sAdapter = new StoryAdapter(finalList);
+                final StoryAdapter sAdapter = new StoryAdapter(finalList);
                 for(final Story s:finalList){
                     StorageReference storycover = storage.getReferenceFromUrl(s.getCover());
 
@@ -79,18 +96,19 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
                 cycview.setLayoutManager(mLayoutManager);
                 cycview.setItemAnimator(new DefaultItemAnimator());
                 cycview.setAdapter(sAdapter);
                 sAdapter.notifyDataSetChanged();
-                cycview.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), cycview, new RecyclerTouchListener.ClickListener() {
+                cycview.addOnItemTouchListener(new RecyclerTouchListener(context, cycview, new RecyclerTouchListener.ClickListener() {
                     @Override
                     public void onClick(View view, int position) {
                         Story story = finalList.get(position);
-                        TextActivity.texturl = story.getUrl();
-                        Intent intent = new Intent(MainActivity.this, TextActivity.class);
-                        startActivity(intent);
+                        String texturl= story.getUrl();
+                        Intent intent = new Intent(main, TextActivity.class);
+                        intent.putExtra("texturl",texturl);
+                        main.startActivity(intent);
                     }
 
                     @Override
