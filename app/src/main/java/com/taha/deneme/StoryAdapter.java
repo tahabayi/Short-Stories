@@ -5,9 +5,6 @@ package com.taha.deneme;
  */
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +13,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,42 +52,16 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final MyViewHolder holder1=holder;
+        //final MyViewHolder holder1=holder;
         final Story story = storylist.get(position);
         holder.title.setText(story.getTitle());
         holder.author.setText(story.getAuthor());
         holder.rating.setRating(story.getRating());
         holder.time.setText(String.valueOf(story.getTime())+" minutes");
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storycover = storage.getReferenceFromUrl(story.getCover());
-        //StorageReference storytext = storage.getReferenceFromUrl(story.getUrl());
-
-//        storycover.child("users/me/profile.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                if(!story.loaded){
-//                    Picasso.with(context).load(uri.toString()).into(holder1.cover);
-//                    story.loaded = true;
-//                }
-//            }
-//        });
-
-        if(story.loaded){
-            Picasso.with(context).load(story.urlFull).into(holder.cover);
-        }
-
-
-//        final long ONE_MEGABYTE = 1024 * 1024;
-//        storycover.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
-//                //TODO
-//                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-//                holder1.cover.setImageBitmap(bmp);
-//
-//            }
-//        });
+        //if(story.loaded){
+            Picasso.with(context).load(story.getCover()).into(holder.cover);
+        //}
 
         if(story.getEditorPick())
             holder.editorPick.setVisibility(View.VISIBLE);

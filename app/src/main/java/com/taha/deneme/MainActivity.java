@@ -1,128 +1,126 @@
 package com.taha.deneme;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView cycview;
-    StoryAdapter sAdapter;
-    DatabaseReference story_database;
-    FloatingActionButton actionButton;
-
+    LinearLayout getstoryButton;
+    LinearLayout edtpickButton;
+    LinearLayout popButton;
+    LinearLayout authButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DatabaseReference story_database = FirebaseDatabase.getInstance().getReference("stories");
+
+        story_database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("gotit","gotdb");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("authors");
+        ref.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> arr = new ArrayList<String>();
+                for (DataSnapshot child:dataSnapshot.getChildren()){
+                    arr.add(child.child("picture").getValue().toString());
+                }
+                final FirebaseStorage storage = FirebaseStorage.getInstance();
+                final String [] str=new String[arr.size()];
+                for(int i=0;i<arr.size();i++){
+                    final int x=i;
+                    StorageReference storycover = storage.getReferenceFromUrl(arr.get(i));
+
+                    storycover.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            ref.child(String.valueOf(x)).child("coverPublic").setValue(uri.toString());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+
+
+
+        /*Log.d("time","deneme1");
+        ref.orderByChild("rating").limitToLast(20).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot msgSnapshot: snapshot.getChildren()) {
+                    StoryCus msg = msgSnapshot.getValue(StoryCus.class);
+                }
+                Log.d("time","deneme2");
+            }
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+            }
+        });*/
+
+
         //--
-        cycview = (RecyclerView) findViewById(R.id.recyclerview);
-        actionButton = (FloatingActionButton) findViewById((R.id.floatingActionButton));
-        actionButton.setOnClickListener(new View.OnClickListener() {
+        getstoryButton = (LinearLayout) findViewById(R.id.getstoryButton);
+        edtpickButton = (LinearLayout) findViewById(R.id.edtpickButton);
+        popButton = (LinearLayout) findViewById(R.id.popButton);
+        authButton = (LinearLayout) findViewById(R.id.authButton);
+        //--
+        getstoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TimeCircleActivity.class);
                 startActivity(intent);
             }
         });
-        //-- get database
-        story_database = FirebaseDatabase.getInstance().getReference("stories");
-        //-- order stories by rating
-        Query story_ordered=story_database.orderByChild("rating").limitToLast(40);
-
-        querytoview(story_ordered,cycview,getApplicationContext(),this);
-
-
-    }
-
-    public static void querytoview(final Query story_ordered, final RecyclerView cycview, final Context context, final Activity main){
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        story_ordered.addListenerForSingleValueEvent(new ValueEventListener() {
+        //--
+        edtpickButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                final ArrayList<Story> storylist = new ArrayList<Story>();
-                for(DataSnapshot child:dataSnapshot.getChildren()) {
-                    String title = child.child("title").getValue().toString();
-                    String author = child.child("authorName").getValue().toString();
-                    String url = child.child("textFile").getValue().toString();
-                    String cover = child.child("cover").getValue().toString();
-                    float rating = Float.parseFloat(child.child("rating").getValue().toString());
-                    boolean editorPick = (boolean)child.child("isEditorsPick").getValue();
-                    int time = Integer.parseInt(child.child("time").getValue().toString());
-                    //--
-                    storylist.add(0,new Story(title,author,url,null, cover,rating,editorPick,time));
-                }
-                Collections.shuffle(storylist);
-                final ArrayList<Story> finalList = new ArrayList<Story>(storylist.subList(0,20));
-
-                final StoryAdapter sAdapter = new StoryAdapter(finalList);
-                for(final Story s:finalList){
-                    StorageReference storycover = storage.getReferenceFromUrl(s.getCover());
-
-                    storycover.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if(!s.loaded){
-                                s.urlFull = uri.toString();
-                                s.loaded = true;
-                                sAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
-                }
-
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
-                cycview.setLayoutManager(mLayoutManager);
-                cycview.setItemAnimator(new DefaultItemAnimator());
-                cycview.setAdapter(sAdapter);
-                sAdapter.notifyDataSetChanged();
-                cycview.addOnItemTouchListener(new RecyclerTouchListener(context, cycview, new RecyclerTouchListener.ClickListener() {
-                    @Override
-                    public void onClick(View view, int position) {
-                        Story story = finalList.get(position);
-                        String texturl= story.getUrl();
-                        Intent intent = new Intent(main, TextActivity.class);
-                        intent.putExtra("texturl",texturl);
-                        main.startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) {
-
-                    }
-                }));
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EdtpickActivity.class);
+                startActivity(intent);
             }
-
+        });
+        //--
+        popButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PopularActivity.class);
+                startActivity(intent);
+            }
+        });
+        //--
+        authButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AuthorActivity.class);
+                startActivity(intent);
             }
         });
     }
-
-
 }

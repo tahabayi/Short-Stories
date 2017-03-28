@@ -11,21 +11,197 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.taha.deneme.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/recyclerview"
-        android:scrollbars="vertical" />
+        android:orientation="vertical"
+        android:weightSum="100">
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/floatingActionButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="19"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/border"
+            android:id="@+id/getstoryButton"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/clock"
+                android:id="@+id/imageView1"
+                android:layout_weight="2"
+                android:baselineAlignBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:text="Read Now"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView1"
+                android:layout_weight="8"
+                android:textSize="36dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="19"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/border"
+            android:id="@+id/edtpickButton"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/bookmark"
+                android:id="@+id/imageView2"
+                android:layout_weight="2"
+                android:baselineAlignBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:text="Editor's Pick"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView2"
+                android:layout_weight="8"
+                android:textSize="36dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="19"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/border"
+            android:id="@+id/popButton"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/book"
+                android:id="@+id/imageView3"
+                android:layout_weight="2"
+                android:baselineAlignBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:text="Stories"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView3"
+                android:layout_weight="8"
+                android:textSize="36dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="19"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/border"
+            android:id="@+id/authButton"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/pjimage"
+                android:id="@+id/imageView4"
+                android:layout_weight="2"
+                android:baselineAlignBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:text="Authors"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView4"
+                android:layout_weight="8"
+                android:textSize="36dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/clickme"
+            android:id="@+id/getstoryButton"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/editors_pick"
+            android:id="@+id/edtpickButton"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/popular"
+            android:id="@+id/popButton"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:id="@+id/authButton"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>-->
+
+
+
 </RelativeLayout>

@@ -3,7 +3,6 @@ package com.taha.deneme;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,6 +37,34 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.taha.deneme.PopularActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.MainActivity2" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.taha.deneme.EdtpickActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.EdtpickActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.taha.deneme.AuthorActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.AuthorActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.taha.deneme.StorybyautActivity">
+            <intent-filter>
+                <action android:name="com.taha.deneme.StorybyautActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

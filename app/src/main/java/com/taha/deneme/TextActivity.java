@@ -3,12 +3,8 @@ package com.taha.deneme;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,20 +76,6 @@ public class TextActivity extends Activity {
                 mTextView.getLineSpacingExtra(),
                 mTextView.getIncludeFontPadding());
         update();
-
-
-        /*mTextView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                // Removing layout listener to avoid multiple calls
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    mTextView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    mTextView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-
-            }
-        });*/
 
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
