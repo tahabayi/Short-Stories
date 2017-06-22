@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(MainActivity.this, FacebookLogin.class);
+        startActivity(intent);
+
         DatabaseReference story_database = FirebaseDatabase.getInstance().getReference("stories");
 
         story_database.addListenerForSingleValueEvent(new ValueEventListener() {

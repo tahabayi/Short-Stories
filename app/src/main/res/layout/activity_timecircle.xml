@@ -14,12 +14,12 @@
         android:layout_width="285dp"
         android:layout_height="300dp"
         app:max="60"
-        app:pointer_color="@color/point_color"
-        app:pointer_halo_color="@color/point_halo_color"
+        app:pointer_color="@color/colorSecondary"
+        app:pointer_halo_color="@color/colorSecondary"
         app:pointer_size="15dp"
-        app:text_color="@color/text_color"
+        app:text_color="@color/colorSecondary"
         app:text_size="65sp"
-        app:wheel_active_color="@color/wheel_active_color"
+        app:wheel_active_color="@color/colorSecondaryLight"
         app:wheel_unactive_color="@color/wheel_unactive_color"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:padding="12dp"
-        android:text="POPULAR"
-        />
+        android:text="Pick My Stories"
+        android:background="@drawable/roundedbutton"/>
 
 </RelativeLayout>

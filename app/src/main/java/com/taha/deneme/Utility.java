@@ -67,9 +67,14 @@ public class Utility {
                 }*/
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+
+
+
                 cycview.setLayoutManager(mLayoutManager);
                 cycview.setItemAnimator(new DefaultItemAnimator());
                 cycview.setAdapter(sAdapter);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(cycview.getContext());
+                cycview.addItemDecoration(dividerItemDecoration);
                 sAdapter.notifyDataSetChanged();
                 cycview.addOnItemTouchListener(new RecyclerTouchListener(context, cycview, new RecyclerTouchListener.ClickListener() {
                     @Override
@@ -144,6 +149,8 @@ public class Utility {
                 cycview.setLayoutManager(mLayoutManager);
                 cycview.setItemAnimator(new DefaultItemAnimator());
                 cycview.setAdapter(sAdapter);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(cycview.getContext());
+                cycview.addItemDecoration(dividerItemDecoration);
                 sAdapter.notifyDataSetChanged();
                 cycview.addOnItemTouchListener(new RecyclerTouchListener(context, cycview, new RecyclerTouchListener.ClickListener() {
                     @Override

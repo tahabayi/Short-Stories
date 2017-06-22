@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '26'
     defaultConfig {
         applicationId "com.taha.deneme"
         minSdkVersion 16
@@ -20,6 +20,7 @@ android {
 }
 
 repositories {
+    mavenCentral()
     maven {
         url "https://jitpack.io"
     }
@@ -41,5 +42,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:design:24.2.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
 apply plugin: 'com.google.gms.google-services'
