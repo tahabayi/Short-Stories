@@ -33,6 +33,7 @@ public class Utility {
                 Log.d("story","deneme2");
                 final ArrayList<Story> storylist = new ArrayList<Story>();
                 for(DataSnapshot child:dataSnapshot.getChildren()) {
+                    int story_id = Integer.parseInt(child.getKey());
                     String title = child.child("title").getValue().toString();
                     String author = child.child("authorName").getValue().toString();
                     String url = child.child("textFile").getValue().toString();
@@ -41,7 +42,7 @@ public class Utility {
                     boolean editorPick = (boolean)child.child("isEditorsPick").getValue();
                     int time = Integer.parseInt(child.child("time").getValue().toString());
                     //--
-                    storylist.add(0,new Story(title,author,url, cover,rating,editorPick,time));
+                    storylist.add(0,new Story(story_id,title,author,url, cover,rating,editorPick,time));
                 }
                 Collections.shuffle(storylist);
                 final ArrayList<Story> finalList;
@@ -51,20 +52,6 @@ public class Utility {
                     finalList = storylist;
 
                 final StoryAdapter sAdapter = new StoryAdapter(finalList);
-                /*for(final Story s:finalList){
-                    StorageReference storycover = storage.getReferenceFromUrl(s.getCover());
-
-                    storycover.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if(!s.loaded){
-                                s.urlFull = uri.toString();
-                                s.loaded = true;
-                                sAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
-                }*/
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
 
@@ -81,8 +68,10 @@ public class Utility {
                     public void onClick(View view, int position) {
                         Story story = finalList.get(position);
                         String texturl= story.getUrl();
+                        int story_id = story.getId();
                         Intent intent = new Intent(main, TextActivity.class);
                         intent.putExtra("texturl",texturl);
+                        intent.putExtra("story_id",story_id);
                         main.startActivity(intent);
                     }
 

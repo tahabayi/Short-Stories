@@ -27,7 +27,7 @@
         </activity>
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".FacebookLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -85,9 +85,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.taha.deneme.FacebookLogin">
+            android:name="com.taha.deneme.MainActivity">
             <intent-filter>
-                <action android:name="com.taha.deneme.FacebookLogin" />
+                <action android:name="com.taha.deneme.MainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

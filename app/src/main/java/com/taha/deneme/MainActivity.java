@@ -3,9 +3,7 @@ package com.taha.deneme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,15 +24,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, FacebookLogin.class);
-        startActivity(intent);
-
         DatabaseReference story_database = FirebaseDatabase.getInstance().getReference("stories");
 
         story_database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("gotit","gotdb");
             }
 
             @Override
@@ -42,52 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        /*final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("authors");
-        ref.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> arr = new ArrayList<String>();
-                for (DataSnapshot child:dataSnapshot.getChildren()){
-                    arr.add(child.child("picture").getValue().toString());
-                }
-                final FirebaseStorage storage = FirebaseStorage.getInstance();
-                final String [] str=new String[arr.size()];
-                for(int i=0;i<arr.size();i++){
-                    final int x=i;
-                    StorageReference storycover = storage.getReferenceFromUrl(arr.get(i));
-
-                    storycover.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            ref.child(String.valueOf(x)).child("coverPublic").setValue(uri.toString());
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-
-
-        /*Log.d("time","deneme1");
-        ref.orderByChild("rating").limitToLast(20).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot msgSnapshot: snapshot.getChildren()) {
-                    StoryCus msg = msgSnapshot.getValue(StoryCus.class);
-                }
-                Log.d("time","deneme2");
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-            }
-        });*/
-
 
         //--
         getstoryButton = (LinearLayout) findViewById(R.id.getstoryButton);

@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Story {
+    private int story_id;
     private String title;
     private String author;
     private String url;
@@ -20,7 +21,8 @@ public class Story {
 
     public Story(){}
 
-    public Story(String title, String author, String url, String cover, float rating, boolean editorPick,int time) {
+    public Story(int story_id, String title, String author, String url, String cover, float rating, boolean editorPick,int time) {
+        this.story_id = story_id;
         this.title = title;
         this.author = author;
         this.url = url;
@@ -34,6 +36,10 @@ public class Story {
     @Override
     public String toString() {
         return this.title;
+    }
+
+    public int getId() {
+        return this.story_id;
     }
 
     public String getTitle(){

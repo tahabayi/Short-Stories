@@ -1,9 +1,9 @@
 package com.taha.deneme;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,12 +16,15 @@ import com.google.firebase.storage.StorageReference;
  * Created by taha on 06.10.2016.
  */
 
-public class TextActivity extends Activity {
+public class TextActivity extends FragmentActivity {
 
+
+    private int story_id;
     private TextView mTextView;
     private Pagination mPagination;
     private CharSequence mText;
     private int mCurrentIndex = 0;
+    public String text;
 
 
 
@@ -36,6 +39,7 @@ public class TextActivity extends Activity {
 
         Intent intent = getIntent();
         texturl = intent.getStringExtra("texturl");
+        story_id = intent.getIntExtra("story_id",0);
 
         mTextView = (TextView) findViewById(R.id.tv);
         changeFont(mTextView);
@@ -46,8 +50,8 @@ public class TextActivity extends Activity {
         Task t=storytext.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                final String s = new String(bytes);
-                deneme(s);
+                text = new String(bytes);
+                deneme(text);
             }
         });
 
@@ -66,7 +70,7 @@ public class TextActivity extends Activity {
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/Bookerly-Regular.ttf");
         tv.setTypeface(custom_font);
     }
-    private void deneme(String s){
+    public void deneme(String s){
         mText = s;
         mPagination = new Pagination(mText,
                 mTextView.getWidth(),
@@ -87,6 +91,25 @@ public class TextActivity extends Activity {
         findViewById(R.id.btn_forward).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mCurrentIndex==mPagination.size()-1){
+                    if (findViewById(R.id.fragment_container) != null) {
+                        findViewById(R.id.btn_back).setOnClickListener(null);
+                        findViewById(R.id.btn_forward).setOnClickListener(null);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("story_id",story_id);
+
+                        // Create a new Fragment to be placed in the activity layout
+                        RatingFragment ratingFragment = new RatingFragment();
+
+                        ratingFragment.setArguments(bundle);
+
+                        // Add the fragment to the 'fragment_container' FrameLayout
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,ratingFragment,null).commit();
+                        findViewById(R.id.fragment_container).bringToFront();
+                    }
+                }
+
                 mCurrentIndex = (mCurrentIndex < mPagination.size() - 1) ? mCurrentIndex + 1 : mPagination.size() - 1;
                 update();
             }

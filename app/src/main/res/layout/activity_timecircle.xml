@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:padding="12dp"
-        android:text="Pick My Stories"
+        android:text="Pick Me Stories"
         android:background="@drawable/roundedbutton"/>
 
 </RelativeLayout>
